@@ -1,0 +1,35 @@
+fun main(args: Array<String>){
+    val input = readLine()!!.toInt()
+    var array = ArrayList<MutableList<String>>()
+
+    for(i in 0 until input){
+        val p = readLine()!!.split(".")
+        array.add(p.toMutableList())
+        array[i].removeAt(array[i].size-1)
+    }
+
+    var check = 0
+    for (i in 0 until array[0].size){
+        var cnt = 1
+        for (j in 1 until input){
+            if ( array[j].size > i && array[0][i] == array[j][i]) {
+                cnt++
+            }
+        }
+        if (cnt == input){
+            check++
+        } else
+            break
+    }
+
+    if(check==0)
+        print("없음")
+    else if (check==1)
+        print(array[0][0])
+    else {
+        print(array[0][0])
+        for (i in 1 until check-1)
+            print("." + array[0][i])
+        print(if (check >= 2) "."+ array[0][check-1] else array[0][check-1])
+    }
+}
