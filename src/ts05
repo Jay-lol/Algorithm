@@ -1,0 +1,93 @@
+import kotlin.Comparator
+
+fun main(args: Array<String>){
+    val n = readLine()!!.toInt()
+    val name = Array(n){""}
+    val buy = IntArray(n){0}
+    val visit = IntArray(n){0}
+    var array = mutableListOf<List<String>>()
+
+    for (i in 0 until n){
+        array.add(readLine()!!.split(","))
+    }
+
+    array = array.sortedWith(Comparator { a, b ->
+        when {
+            a[0].toLowerCase() > b[0].toLowerCase() -> 1
+            a[0].toLowerCase() < b[0].toLowerCase() -> -1
+            else -> 0
+        }
+    }).toMutableList()
+
+    name[0] = array[0][0]
+    buy[0] += array[0][1].toInt()
+    visit[0]++
+
+    var check = 0
+    for (i in 1 until n){
+        if(array[i][0] == array[i-1][0]){
+            buy[check] += array[i][1].toInt()
+            visit[check]++
+        } else {
+            check++
+            name[check] = array[i][0]
+            buy[check] += array[i][1].toInt()
+            visit[check]++
+        }
+
+    }
+
+    val b = mutableListOf<String>()
+    val v = mutableListOf<String>()
+
+    val bm = buy.max()
+    val vm = visit.max()
+
+    for (i in buy.indices) {
+        if (buy[i]==bm)
+            b.add(name[i])
+        if (visit[i]==vm)
+            v.add(name[i])
+    }
+
+
+    var blist = b.toList()
+    var vlist = v.toList()
+
+    blist = blist.sortedWith(Comparator { a, b ->
+        when {
+            a.toLowerCase() > b.toLowerCase() -> 1
+            a.toLowerCase() < b.toLowerCase() -> -1
+            else -> 0
+        }
+    })
+
+    vlist = vlist.sortedWith(Comparator { a, b ->
+        when {
+            a.toLowerCase() > b.toLowerCase() -> 1
+            a.toLowerCase() < b.toLowerCase() -> -1
+            else -> 0
+        }
+    })
+
+    var u = 0
+    for (x in blist) {
+        if(u ==0){
+            print(x)
+            u++
+        } else {
+            print(",$x")
+        }
+    }
+    println()
+    u = 0
+    for (x in vlist)
+    {
+        if(u ==0){
+            print(x)
+            u++
+        } else {
+            print(",$x")
+        }
+    }
+}
