@@ -1,0 +1,22 @@
+//입금, 출금 경우의 수 계산하기
+private var check = 0
+fun main(args: Array<String>) {
+    val (n,m,x) = readLine()!!.split(" ").map { it.toInt() }
+    dfs(n, m, x)
+    print(check)
+
+}
+
+fun dfs(n: Int, m: Int, x: Int) {
+
+    if (n == 0 && m == 0) {
+        check++
+        return
+    }
+    if (n != 0)
+        dfs(n - 1, m, x + 1)
+
+    if (x != 0 && m != 0)
+        dfs(n, m - 1, x - 1)
+
+}
